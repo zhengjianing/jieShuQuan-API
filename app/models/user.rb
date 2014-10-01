@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  mount_uploader :avatar, AvatarUploader
 
   has_many :books
   belongs_to :group
@@ -53,6 +54,7 @@ class User < ActiveRecord::Base
         book_count:self.book_count
     }
   end
+
 
   def has_book?(douban_book_id)
     self.books.select {|book| book.douban_book_id == douban_book_id }.size > 0

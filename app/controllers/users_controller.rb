@@ -85,12 +85,8 @@ class UsersController < ApplicationController
       return
     end
 
-    uploaded_io = params[:avatar_file]
-    if !uploaded_io.nil? && uploaded_io.content_type.match('image')
-      File.open(Rails.root.join('public/assets', uploaded_io.original_filename), 'wb') do |f|
-        f.write(uploaded_io.read)
-      end
-
+    user.avatar = params[:avatar_file]
+    if user.save!
       render json: {result: "uploaded success!"}
     else
       render json: {result: "uploaded fail!"}, status: 500
