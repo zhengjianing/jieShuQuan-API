@@ -103,7 +103,7 @@ class BooksController < ApplicationController
     end
 
     friends_result = friends.map do |friend|
-      friend.friend_info.merge({available: user.books.select{|book| book.douban_book_id == params[:douban_book_id]}.first.available})
+      friend.friend_info.merge({available: Book.where({douban_book_id: params[:douban_book_id], user_id: friend.id.to_s}).first.available})
     end
 
     results = {douban_book_id: params[:douban_book_id], friends: friends_result}
