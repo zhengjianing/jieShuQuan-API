@@ -2,11 +2,15 @@ Rails.application.routes.draw do
 
   # books routes
   # ------------------------------------------------------------------------------------------------
+  # api
   get 'books/:password' => 'books#index'
   post 'add_book' => "books#create"
   put 'remove_book' => "books#remove"
   put 'change_status' => "books#update"
   get 'friendsWithBook/:douban_book_id/forUser/:user_id' => 'books#get_friends_with_book_for_user'
+
+  # views
+  get 'book/:douban_book_id' => 'books#show'
   # ------------------------------------------------------------------------------------------------
 
 

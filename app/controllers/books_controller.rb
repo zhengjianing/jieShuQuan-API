@@ -10,6 +10,9 @@ class BooksController < ApplicationController
     end
   end
 
+  def show
+    redirect_to "http://book.douban.com/subject/#{params[:douban_book_id]}/"
+  end
 
   # POST /add_book
   def create
