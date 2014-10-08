@@ -22,32 +22,34 @@ class BorrowsController < ApplicationController
       lender_ids = []
       one_week_ago = Time.now - 7*24*60*60
 
-      Borrow.all.map do |borrow|
-        if borrow.created_at.time > one_week_ago
-          douban_book_ids << borrow.douban_book_id
-          borrower_ids << borrow.borrower_id
-          lender_ids << borrow.lender_id
+      if Borrow.all.size > 0
+        Borrow.all.map do |borrow|
+          if borrow.created_at.time > one_week_ago
+            douban_book_ids << borrow.douban_book_id
+            borrower_ids << borrow.borrower_id
+            lender_ids << borrow.lender_id
+          end
         end
+
+        book_info = most_frequent_number_in_array(douban_book_ids)
+        hotest_book = Book.where(douban_book_id: book_info[:max_element]).first
+
+        borrower_info = most_frequent_number_in_array(borrower_ids)
+        hostest_borrower = User.where(id: borrower_info[:max_element].to_i).first
+
+        lender_info = most_frequent_number_in_array(lender_ids)
+        hostest_lender = User.where(id: lender_info[:max_element].to_i).first
+
+        render json:
+                   {
+                       statics:
+                           {
+                               hostest_book: {book_name: hotest_book.name, book_image_url: hotest_book.image_href, count: book_info[:max_count]},
+                               hostest_borrower: {user_name: hostest_borrower.name, user_email: hostest_borrower.email, count: borrower_info[:max_count]},
+                               hostest_lender: {user_name: hostest_lender.name, user_email: hostest_lender.email, count: lender_info[:max_count]}
+                           }
+                   }
       end
-
-      book_info = most_frequent_number_in_array(douban_book_ids)
-      hotest_book = Book.where(douban_book_id: book_info[:max_element]).first
-
-      borrower_info = most_frequent_number_in_array(borrower_ids)
-      hostest_borrower = User.where(id: borrower_info[:max_element].to_i).first
-
-      lender_info = most_frequent_number_in_array(lender_ids)
-      hostest_lender = User.where(id: lender_info[:max_element].to_i).first
-
-      render json:
-                 {
-                     statics:
-                         {
-                             hostest_book: {book_name: hotest_book.name, book_image_url: hotest_book.image_href, count: book_info[:max_count]},
-                             hostest_borrower: {user_name: hostest_borrower.name, user_email: hostest_borrower.email, count: borrower_info[:max_count]},
-                             hostest_lender: {user_name: hostest_lender.name, user_email: hostest_lender.email, count: lender_info[:max_count]}
-                         }
-                 }
     else
       render json: {error: 'wrong password'}
     end
