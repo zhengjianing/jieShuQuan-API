@@ -41,4 +41,14 @@ Rails.application.routes.draw do
   get 'comments_for_book/:douban_book_id' => 'comments#comments_for_book'
   # ------------------------------------------------------------------------------------------------
 
+
+  # borrow routes
+  # ------------------------------------------------------------------------------------------------
+  post 'borrow_book' => 'borrows#create'
+
+  get 'borrows/:password' => 'borrows#index'
+  get 'admin/:password' => 'borrows#statics'
+
+  # ------------------------------------------------------------------------------------------------
+
 end
