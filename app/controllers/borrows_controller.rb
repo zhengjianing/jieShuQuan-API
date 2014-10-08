@@ -49,6 +49,11 @@ class BorrowsController < ApplicationController
                                hostest_lender: {user_name: hostest_lender.name, user_email: hostest_lender.email, count: lender_info[:max_count]}
                            }
                    }
+      else
+        render json:
+                   {
+                       statics: "no borrow records."
+                   }
       end
     else
       render json: {error: 'wrong password'}
