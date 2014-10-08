@@ -1,0 +1,70 @@
+<div class="content">
+  <div class="header">借书圈好书推荐</div>
+
+  <div class="book-info">
+    <div class="left">
+      <img src=<%= @book.image_href %>>
+    </div>
+
+    <div class="right">
+      <p class="book-name"><%= @book.name %></p>
+
+      <div class="sub-section">
+        <p class="label">作者：</p>
+
+        <p class="content"><%= @book.authors %></p>
+      </div>
+
+      <a href="#comments" class="sub-section">
+        <p class="label">评论：</p>
+
+        <p href="#comments" class="content"><%= @comments.size %></p>
+      </a>
+    </div>
+  </div>
+
+
+  <div class="introduction">
+    <div class="sub-section">
+      <p class="label">图书简介</p>
+
+      <% description = (@book.description == "") ? "暂无介绍" : @book.description %>
+      <p class="content"><%= description %></p>
+    </div>
+
+    <div class="sub-section">
+      <p class="label">作者简介</p>
+
+      <% author_info = (@book.author_info == "") ? "暂无介绍" : @book.author_info %>
+      <p class="content"><%= author_info %></p>
+    </div>
+  </div>
+
+
+  <div id="comments" class="comments">
+    <p class="label">大家的评论</p>
+
+    <div class="content">
+      <% if @comments.count>0 -%>
+          <ul>
+            <% @comments.each do |comment| %>
+                <li>
+                  <p><%= comment.content %></p>
+                  <% user_name = (comment.user_name == "") ? "匿名用户" : comment.user_name %>
+                  <p class="sub-content user-name"><%= user_name %></p>
+
+                  <p class="sub-content date"><%= comment.created_at.time.strftime('%Y-%m-%d %H:%M:%S') %></p>
+                </li>
+            <% end %>
+          </ul>
+      <% else %>
+          <p>暂无评论</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <p>下载‘借书圈’APP，了解更多...</p>
+</div>
+

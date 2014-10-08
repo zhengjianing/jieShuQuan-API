@@ -11,7 +11,14 @@ class BooksController < ApplicationController
   end
 
   def show
-    redirect_to "http://book.douban.com/subject/#{params[:douban_book_id]}/"
+    @book = Book.where(:douban_book_id => params[:douban_book_id]).first
+    @comments = Comment.where(:douban_book_id => params[:douban_book_id])
+
+    if @book.nil?
+      redirect_to "http://book.douban.com/subject/#{params[:douban_book_id]}/"
+    else
+      render :show
+    end
   end
 
   # POST /add_book
