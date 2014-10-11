@@ -44,6 +44,19 @@ class User < ActiveRecord::Base
     }
   end
 
+  def show_users
+    {
+        user_id: self.id.to_s,
+        user_email: self.email,
+        user_name: self.name,
+        location: self.location,
+        phone_number: self.phone_number,
+        book_count: self.book_count,
+        friend_count: self.friend_count,
+        group_name: self.group_name
+    }
+  end
+
   def friend_info
     {
         friend_id: self.id.to_s,

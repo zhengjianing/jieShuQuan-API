@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def index
     if params[:password] == '999'
       @users = User.all.map do |user|
-        user.register_success_result
+        user.show_users
       end
       render json: @users
     else
