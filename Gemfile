@@ -25,7 +25,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'carrierwave'
-gem 'carrierwave-qiniu'
+gem "carrierwave-qiniu", '0.1.0'
 
 group :development do
   gem 'sqlite3'
