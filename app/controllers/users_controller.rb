@@ -86,6 +86,7 @@ class UsersController < ApplicationController
     end
 
     user.avatar = params[:avatar_file]
+    user.avatar_url = params[:avatar_url]
     if user.save!
       render json: {result: "uploaded success!"}
     else

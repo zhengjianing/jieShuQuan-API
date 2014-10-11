@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141008140923) do
+ActiveRecord::Schema.define(version: 20141011081955) do
 
   create_table "books", force: true do |t|
     t.string   "douban_book_id",                 null: false
@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(version: 20141008140923) do
     t.string   "user_name",      default: ""
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "group_name",     default: ""
   end
 
   create_table "groups", force: true do |t|
@@ -63,6 +62,7 @@ ActiveRecord::Schema.define(version: 20141008140923) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "avatar"
+    t.string   "avatar_url",   default: ""
   end
 
 end

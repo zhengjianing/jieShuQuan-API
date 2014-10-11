@@ -38,6 +38,7 @@ class User < ActiveRecord::Base
         user_name: self.name,
         location: self.location,
         phone_number: self.phone_number,
+        avatar_url: self[:avatar_url],
         book_count: self.book_count,
         friend_count: self.friend_count,
         group_name: self.group_name
@@ -51,6 +52,7 @@ class User < ActiveRecord::Base
         user_name: self.name,
         location: self.location,
         phone_number: self.phone_number,
+        avatar_url: self[:avatar_url],
         book_count: self.book_count,
         friend_count: self.friend_count,
         group_name: self.group_name
@@ -64,6 +66,7 @@ class User < ActiveRecord::Base
         friend_email: self.email,
         friend_location: self.location,
         friend_phone_number: self.phone_number,
+        friend_avatar_url: self[:avatar_url],
         book_count:self.book_count
     }
   end
