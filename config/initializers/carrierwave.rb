@@ -6,5 +6,5 @@
   config.qiniu_secret_key    = 'zaKg0_T_DmVHRheE3DWx1ZAZohHEEVz4Q5gxaNr5'
   config.qiniu_bucket        = "jieshuquan-ios"
   config.qiniu_bucket_domain = "jieshuquan-ios.qiniudn.com"
-  config.qiniu_expires_in = 0
+  config.expires_in = 0
 end
