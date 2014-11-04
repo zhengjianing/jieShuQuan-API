@@ -61,15 +61,15 @@ api for jieshuquan IOS APP
 
 
 == 修改位置（POST）：
-* http://jieshuquan.herokuapp.com/change_location
-* data example:  {"user_id”:”1”,”access_token”:”aaaaaaa”,”location”:”new location"}
-* 返回值举例：{result: “change location success!"}
+    * http://jieshuquan.herokuapp.com/change_location
+    * data example:  {"user_id”:”1”,”access_token”:”aaaaaaa”,”location”:”new location"}
+    * 返回值举例：{result: “change location success!"}
 
 == 修改电话号码（POST）：
 
-* http://jieshuquan.herokuapp.com/change_phone_number
-* data example:  {"user_id”:”1”,”access_token”:”aaaaaaa”,”phone_number”:”new phone_number"}
-* 返回值举例：{result: “change phone_number success!"}
+    * http://jieshuquan.herokuapp.com/change_phone_number
+    * data example:  {"user_id”:”1”,”access_token”:”aaaaaaa”,”phone_number”:”new phone_number"}
+    * 返回值举例：{result: “change phone_number success!"}
 
 
 
