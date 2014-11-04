@@ -1,1 +1,195 @@
 api for jieshuquan IOS APP
+
+----------------------------------------------------------------
+评论相关：
+
+== 创建（POST）：
+
+   * http://jieshuquan.herokuapp.com/comments/create
+   * data example   {“douban_book_id”:”222”,“user_name”:”name”,"content”:”this is a good book”,”group_name”:”asdfsfd"}
+
+
+== 获得某本书的所有评论（GET）：
+
+   * http://jieshuquan.herokuapp.com/comments_for_book/:douban_book_id
+   * 返回值：{douban_book_id: "2222”, comments: [{group_name:”126”, user_name: "aaa”, content: “adfsfdasf”, comment_date: “2014-09-25"}, {group_name:”126”, user_name: "xiaozhu”, content: "great book”, comment_date: “2014-09-25"}]}
+
+
+
+----------------------------------------------------------------
+
+用户相关：
+
+== 注册（POST）：
+
+   * http://jieshuquan.herokuapp.com/register
+   * data example:  {"email”:”123@126.com","password”:"123abc”}
+   * 【邮箱必须是 xx@xx.com的格式； 密码必须是6-20位的数字或字母】
+   * 返回值举例：
+   *
+{
+user_id: “1”, user_name: “name", “user_email”: “123@456.com”, book_count: “0”, friend_count: “2", access_token: “B2eguCteM1wNfbCiAq5Q”, group_name: “126”, “avatar_url”:”"}
+}
+
+== 登陆（POST）：
+
+   * http://jieshuquan.herokuapp.com/login
+   * data example:  {"email”:”123@126.com","password”:"123abc”}
+   * 返回值举例：
+   *
+{
+user_id: “1”, user_name: “name",“user_email”: “123@456.com”, book_count: “20", friend_count: “2”, access_token: “B2eguCteM1wNfbCiAq5Q”, group_name: “126”, “avatar_url”:”"}
+}
+
+
+== （我的书库）根据 用户ID 获取所有该用户的图书（GET）：
+
+   * http://jieshuquan.herokuapp.com/books_by_user/:user_id  （注意：用真实的user_id代替 :user_id）
+   * 返回值举例：
+   *
+{
+user_id: "1"
+books: [{douban_book_id: “000”, available: true }, {douban_book_id: “003”, available: true}]
+}
+
+
+== （我的朋友）根据 用户ID 获得在同一group的所有用户：（GET）（暂时没用，后面可增加一个tab bar，来显示所有朋友的信息）
+
+   * http://jieshuquan.herokuapp.com/friends_by_user/:user_id（注意：用真实的user_id代替 :user_id）
+   * 返回值举例：
+   *
+{
+user_id: "1"
+friends: [{friend_id:”22”, friend_name: “jailing",friend_email: “aa@126.com”, friend_location: "",friend_phone_number: “", friend_avatar_url:””,book_count: “20"}, {friend_id:”23”, friend_name: “xiaozhu", friend_email: “bb@126.com ”, friend_location: "",friend_phone_number: "", friend_avatar_url:””, book_count: “20"}]
+}
+
+
+== 上传头像（POST）：
+
+   * http://jieshuquan.herokuapp.com/upload_avatar
+   * data example:  {"user_id”:”1”,”access_token”:”aaaaaaa”,”avatar_file”:”avatar’s path in sandbox”, “avatar_url”:”http://jieshuquan-ios.qiniudn.com/uploads%2FuserAvatar-1.png?v=2013101012"}
+   * 返回值举例：
+
+{
+result: “upload success!"
+}
+
+
+== 修改用户名（POST）：
+
+   * http://jieshuquan.herokuapp.com/change_username
+   * data example:  {"user_id”:”1”,”access_token”:”aaaaaaa”,”user_name”:”new username"}
+   * 返回值举例：
+   *
+{
+result: “upload success!"
+}
+
+
+== 修改位置（POST）：
+* http://jieshuquan.herokuapp.com/change_location
+* data example:  {"user_id”:”1”,”access_token”:”aaaaaaa”,”location”:”new location"}
+* 返回值举例：
+*
+{
+result: “change location success!"
+}
+
+== 修改电话号码（POST）：
+
+* http://jieshuquan.herokuapp.com/change_phone_number
+* data example:  {"user_id”:”1”,”access_token”:”aaaaaaa”,”phone_number”:”new phone_number"}
+* 返回值举例：
+*
+{
+result: “change phone_number success!"
+}
+
+
+
+
+----------------------------------------------------------------
+
+图书相关：
+
+==（保存到我的书库）保存一本图书到某个用户ID下（POST）：
+   * http://jieshuquan.herokuapp.com/add_book ( 默认available为false！)
+   * data example:
+   * {"user_id":"1","access_token":"cogKyvGo7CM65TOEygKb","douban_book_id":"000","available":true,"name":"book name","authors":"book authors","image_href":"image href","description":"book description","author_info":"book authorInfo","price":"123","publisher":"book publisher","publish_date":"book publishDate"}
+
+   * 返回值举例：
+{
+book:
+{
+user_id: "1"
+douban_book_id: "11e12"
+available: false
+name: ""
+authors: ""
+image_href: ""
+description: ""
+author_info: ""
+price: ""
+publisher: ""
+publish_date: ""
+created_at: "2014-10-01"
+}
+}
+
+
+==从我的书库删除一本书（PUT）：
+
+   * http://jieshuquan.herokuapp.com/remove_book
+   * data example: {"douban_book_id":"001","user_id":"111”,”access_token":”token_for_this_user”}
+   * 返回值举例：
+   *
+{
+removed: “success”
+}
+
+
+== 更改某本书的状态（PUT）：
+
+   * http://jieshuquan.herokuapp.com/change_status
+   * data example: {"douban_book_id”:"001”,"available”:true,"user_id":"111”,”access_token":”token_for_this_user”} 或
+   * 返回值举例：
+{
+book:
+{
+user_id: "1"
+douban_book_id: "11e12"
+available: true
+name: ""
+authors: ""
+image_href: ""
+description: ""
+author_info: ""
+price: ""
+publisher: ""
+publish_date: ""
+created_at: "2014-10-01"
+}
+}
+
+
+==（向朋友借书）根据 图书ID 和 GROUP NAME 获取拥有该书的、且在同一group的 所有用户（GET）：
+
+   * http://jieshuquan.herokuapp.com/friendsWithBook/:douban_book_id/forUser/:user_id（注意：用真实的douban_book_id代替 :douban_book_id）
+   * 返回值举例：
+   *
+{
+douban_book_id: “000"
+friends: [{friend_id:”1”, friend_name: “aaa”, friend_email:”email”, friend_location: "", friend_phone_number: "", book_count:”1”, available: true}, {friend_id:”1”, friend_name: “2”, friend_email:”email-2”, friend_location: "", friend_phone_number: “", book_count:”1”, available: false}]
+}
+
+
+==向朋友借书（发邮件成功后，再向服务器发送post请求，用于统计信息）：
+
+   * http://jieshuquan.herokuapp.com/borrow_book
+   * data example:
+   * {"douban_book_id":”000”,“borrower_id":"1”,”lender_id”:"2"}
+
+   * 返回值举例：
+{
+result: “Borrow request sent success!"
+}
