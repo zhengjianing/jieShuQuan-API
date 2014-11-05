@@ -1,5 +1,10 @@
 api for jieshuquan IOS APP
 
+CI: 
+https://snap-ci.com/iambowen/jieShuQuan-API/branch/master
+
+
+API介绍：
 ----------------------------------------------------------------
 评论相关：
 
