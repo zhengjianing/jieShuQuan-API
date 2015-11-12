@@ -42,6 +42,22 @@ Rails.application.routes.draw do
   # ------------------------------------------------------------------------------------------------
 
 
+  # BorrowRecord
+  # ------------------------------------------------------------------------------------------------
+  post 'create_borrow_record' => 'borrow_records#create'
+  post 'approve_borrow_record' => 'borrow_records#approve'
+  post 'decline_borrow_record' => 'borrow_records#decline'
+  post 'return_borrow_record' => 'borrow_records#return'
+
+  get 'borrower_records' => 'borrow_records#borrower_records'
+  get 'lender_records' => 'borrow_records#lender_records'
+
+  # ------------------------------------------------------------------------------------------------
+
+
+
+  # ----------------------------------- remove later -------------------------------------------------------------
+  # will be replaced by BorrowRecord, but can't remove it since the old version is still using it
   # borrow routes
   # ------------------------------------------------------------------------------------------------
   post 'borrow_book' => 'borrows#create'

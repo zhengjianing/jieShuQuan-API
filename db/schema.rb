@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141011081955) do
+ActiveRecord::Schema.define(version: 20151109065945) do
 
   create_table "books", force: true do |t|
     t.string   "douban_book_id",                 null: false
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(version: 20141011081955) do
     t.text     "author_info",    default: ""
     t.boolean  "available",      default: false
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "borrow_records", force: true do |t|
+    t.string   "book_id"
+    t.string   "borrower_id"
+    t.string   "lender_id"
+    t.string   "status"
+    t.datetime "application_time"
+    t.datetime "borrow_time"
+    t.datetime "return_time"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
