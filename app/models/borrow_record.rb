@@ -1,9 +1,9 @@
 class BorrowRecord < ActiveRecord::Base
 
   def displayed_value
-    book = Book.where(id: self.book_id.to_i).first
     borrower = User.where(id: self.borrower_id.to_i).first
     lender = User.where(id: self.lender_id.to_i).first
+    book = lender.books.select {|book| book.douban_book_id.to_i == self.book_id.to_i }.first
 
     {
         book_name: non_nil_value_for(book, "name"),
