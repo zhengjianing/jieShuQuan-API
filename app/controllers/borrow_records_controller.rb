@@ -61,6 +61,7 @@ class BorrowRecordsController < ApplicationController
     end
 
     exciting_record.status = $BORROW_STATUS[:approved]
+    exciting_record.borrow_time = Time.now
 
     if exciting_record.save!
       render json: {success: '修改成功'}
@@ -119,6 +120,7 @@ class BorrowRecordsController < ApplicationController
     end
 
     exciting_record.status = $BORROW_STATUS[:returned]
+    exciting_record.return_time = Time.now
 
     if exciting_record.save!
       render json: {success: '修改成功'}
@@ -137,7 +139,7 @@ class BorrowRecordsController < ApplicationController
       return
     end
 
-    borrowRecords = BorrowRecord.where(borrower_id: params[:borrower_id].to_s)
+    borrowRecords = BorrowRecord.where(borrower_id: params[:borrower_id].to_s).sort{|l,r| l.updated_at <=> r.updated_at}
     results = borrowRecords.map {|record| record.displayed_value}
 
     render json: results
