@@ -7,9 +7,12 @@ class BorrowRecord < ActiveRecord::Base
 
     {
         book_name: non_nil_value_for(book, "name"),
+        book_id: non_nil_value_for(book, "douban_book_id"),
         book_image_url: non_nil_value_for(book, "image_href"),
         borrower_name: non_nil_value_for(borrower, "name"),
+        borrower_id: non_nil_value_for(borrower, "id"),
         lender_name: non_nil_value_for(lender, "name"),
+        lender_id: non_nil_value_for(lender, "id"),
         status: self.status,
         application_time: non_nil_value_for(self, "application_time"),
         borrow_time: non_nil_value_for(self, "borrow_time"),
