@@ -60,6 +60,10 @@ class BorrowRecordsController < ApplicationController
       return
     end
 
+    book = Book.where(douban_book_id: params[:book_id].to_s).first
+    book.available = false
+    book.save!
+
     exciting_record.status = $BORROW_STATUS[:approved]
     exciting_record.borrow_time = Time.now
 
@@ -118,6 +122,10 @@ class BorrowRecordsController < ApplicationController
       render json: {error: '借书申请不存在'}
       return
     end
+
+    book = Book.where(douban_book_id: params[:book_id].to_s).first
+    book.available = true
+    book.save!
 
     exciting_record.status = $BORROW_STATUS[:returned]
     exciting_record.return_time = Time.now
