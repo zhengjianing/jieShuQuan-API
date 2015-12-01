@@ -63,9 +63,13 @@ class BorrowRecordsController < ApplicationController
     end
 
     book = Book.where(douban_book_id: params[:book_id].to_s).first
+    if book.nil?
+      render json: {error: '图书不存在'}, status: 409
+      return
+    end
+
     book.available = false
     book.save!
-
     exciting_record.status = $BORROW_STATUS[:approved]
     exciting_record.borrow_time = Time.now
 
@@ -128,9 +132,13 @@ class BorrowRecordsController < ApplicationController
     end
 
     book = Book.where(douban_book_id: params[:book_id].to_s).first
+    if book.nil?
+      render json: {error: '图书不存在'}, status: 409
+      return
+    end
+
     book.available = true
     book.save!
-
     exciting_record.status = $BORROW_STATUS[:returned]
     exciting_record.return_time = Time.now
 
