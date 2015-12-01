@@ -12,17 +12,18 @@ class BorrowRecordsController < ApplicationController
   # /create_borrow_record
   def create
     if params[:book_id] == nil || params[:borrower_id] == nil || params[:lender_id] == nil
-      render json: {error: '参数缺失：book_id or borrower_id or lender_id'}
+      render json: {error: '参数缺失：book_id or borrower_id or lender_id'}, status: 404
       return
     end
 
     exciting_record = BorrowRecord.where({
                                              book_id: params[:book_id].to_s,
                                              borrower_id: params[:borrower_id].to_s,
-                                             lender_id: params[:lender_id].to_s
+                                             lender_id: params[:lender_id].to_s,
+                                             status: $BORROW_STATUS[:pending] || $BORROW_STATUS[:approved]
                                          }).first
     if exciting_record
-      render json: {error: '不能重复申请'}
+      render json: {error: '不能重复申请'}, status: 409
       return
     end
 
@@ -36,7 +37,7 @@ class BorrowRecordsController < ApplicationController
     if borrow_record.save!
       render json: {success: '申请成功'}
     else
-      render json: {error: '申请失败'}
+      render json: {error: '申请失败'}, status: 503
     end
   end
 
@@ -46,17 +47,18 @@ class BorrowRecordsController < ApplicationController
   # /approve_borrow_record
   def approve
     if params[:book_id] == nil || params[:borrower_id] == nil || params[:lender_id] == nil
-      render json: {error: '参数缺失：book_id or borrower_id or lender_id'}
+      render json: {error: '参数缺失：book_id or borrower_id or lender_id'}, status: 404
       return
     end
 
     exciting_record = BorrowRecord.where({
                                              book_id: params[:book_id].to_s,
                                              borrower_id: params[:borrower_id].to_s,
-                                             lender_id: params[:lender_id].to_s
+                                             lender_id: params[:lender_id].to_s,
+                                             status: $BORROW_STATUS[:pending]
                                          }).first
     if !exciting_record
-      render json: {error: '借书申请不存在'}
+      render json: {error: '借书申请不存在'}, status: 409
       return
     end
 
@@ -70,7 +72,7 @@ class BorrowRecordsController < ApplicationController
     if exciting_record.save!
       render json: {success: '修改成功'}
     else
-      render json: {error: '修改失败'}
+      render json: {error: '修改失败'}, status: 503
     end
   end
 
@@ -80,17 +82,18 @@ class BorrowRecordsController < ApplicationController
   # /decline_borrow_record
   def decline
     if params[:book_id] == nil || params[:borrower_id] == nil || params[:lender_id] == nil
-      render json: {error: '参数缺失：book_id or borrower_id or lender_id'}
+      render json: {error: '参数缺失：book_id or borrower_id or lender_id'}, status: 404
       return
     end
 
     exciting_record = BorrowRecord.where({
                                              book_id: params[:book_id].to_s,
                                              borrower_id: params[:borrower_id].to_s,
-                                             lender_id: params[:lender_id].to_s
+                                             lender_id: params[:lender_id].to_s,
+                                             status: $BORROW_STATUS[:pending]
                                          }).first
     if !exciting_record
-      render json: {error: '借书申请不存在'}
+      render json: {error: '借书申请不存在'}, status: 409
       return
     end
 
@@ -99,7 +102,7 @@ class BorrowRecordsController < ApplicationController
     if exciting_record.save!
       render json: {success: '修改成功'}
     else
-      render json: {error: '修改失败'}
+      render json: {error: '修改失败'}, status: 503
     end
   end
 
@@ -109,17 +112,18 @@ class BorrowRecordsController < ApplicationController
   # /return_borrow_record
   def return
     if params[:book_id] == nil || params[:borrower_id] == nil || params[:lender_id] == nil
-      render json: {error: '参数缺失：book_id or borrower_id or lender_id'}
+      render json: {error: '参数缺失：book_id or borrower_id or lender_id'}, status: 404
       return
     end
 
     exciting_record = BorrowRecord.where({
                                              book_id: params[:book_id].to_s,
                                              borrower_id: params[:borrower_id].to_s,
-                                             lender_id: params[:lender_id].to_s
+                                             lender_id: params[:lender_id].to_s,
+                                             status: $BORROW_STATUS[:approved]
                                          }).first
     if !exciting_record
-      render json: {error: '借书申请不存在'}
+      render json: {error: '借书申请不存在'}, status: 409
       return
     end
 
@@ -133,7 +137,7 @@ class BorrowRecordsController < ApplicationController
     if exciting_record.save!
       render json: {success: '修改成功'}
     else
-      render json: {error: '修改失败'}
+      render json: {error: '修改失败'}, status: 409
     end
   end
 
@@ -143,7 +147,7 @@ class BorrowRecordsController < ApplicationController
   # /borrower_records?borrower_id=1
   def borrower_records
     if params[:borrower_id] == nil
-      render json: {error: '参数缺失：borrower_id'}
+      render json: {error: '参数缺失：borrower_id'}, status: 404
       return
     end
 
@@ -159,7 +163,7 @@ class BorrowRecordsController < ApplicationController
   # /lender_records?lender_id=1
   def lender_records
     if params[:lender_id] == nil
-      render json: {error: '参数缺失：lender_id'}
+      render json: {error: '参数缺失：lender_id'}, status: 404
       return
     end
 
